@@ -1,0 +1,38 @@
+#This code uses the PyTrends library, more information can be found (https://github.com/GeneralMills/pytrends#interest-over-time) here. 
+## pytrends, downloaded from github is used to access google search trends data and it returns the results as a dataframe
+from pytrends.request import TrendReq
+# Set the font size to humor sans font because, hey it looked cool! 
+hfont = {'fontname':'Humor Sans'}
+
+# I got this function directly from the description. I assume, it creates the pytrends variable
+# and gives the location of the trend to be taken
+pytrends=TrendReq(hl='en-US',tz=360)
+kw_list=["data science"]
+# The payload to the function with our required keyword is given and the result
+# is stored in a dataframe
+pytrends.build_payload(kw_list, cat=0, timeframe='all', geo='', gprop='')
+x3=pytrends.interest_over_time()
+# Landmarks date and getting their integer location on the dataframe from them
+timers=["2005-01-01","2007-01-01","2011-07-01","2014-01-01","2015-01-01","2016-01-01","2017-01-01","2017-10-01","2019-02-01","2013-01-01"]
+needed=[x3.index.get_loc(i) for i in timers]
+
+# Plotting the dataframe and setting characterestics
+#axs=x3.plot(legend=False,ylim=(0,150),figsize=(40,30),fontsize=25,linewidth=7.0)
+axs=x3.plot(legend=False,ylim=(0,150),figsize=(40,30),fontsize=25,linewidth=7.0,markevery=needed,marker='o',markerfacecolor='red',markersize=15.0)
+axs.set_title("Monthly Search Trend for data science",fontsize=25,**hfont)
+axs.set_xlabel("Dates",fontsize=25,**hfont)
+axs.set_ylabel("Popularity",fontsize=25,**hfont)
+#axs.legend(["Popularity"],fontsize=25)
+# Adding annotations of life landmarks
+axs.annotate(xy=('1996',0),xytext=('1995-01-01',50),s='First Computer',arrowprops=dict(arrowstyle='->'))
+axs.annotate(xy=('2005-01-01',x3.loc['2005-01-01','data science']),xytext=('2004-08-30',50),s='Learnt Basic',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2007-01-01',x3.loc['2007-01-01','data science']),xytext=('2006-02-28',100),s='Learnt C++',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2011-07-01',x3.loc['2011-07-01','data science']),xytext=('2008-07-01',50),s='Learnt Python\nfor an Internship',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2013-01-01',x3.loc['2013-01-01','data science']),xytext=('2009-07-01',80),s='Statistics\ncourse',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2014-01-01',x3.loc['2014-01-01','data science']),xytext=('2010-06-01',120),s='Used MATLAB for\nanalyzing solar data\nand optimize\nsystem performance',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2015-01-01',x3.loc['2015-01-01','data science']),xytext=('2014-12-01',80),s='Attempts at learning\nmachine learning',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2016-01-01',x3.loc['2016-01-01','data science']),xytext=('2015-01-01',75),s='',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+ax2=axs.annotate(xy=('2017-01-01',x3.loc['2017-01-01','data science']),xytext=('2015-01-31',75),s='',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+#ax3=axs.annotate(xy=('2017-01-01',x3.loc['2017-01-01','data science']),xytext=(0,0),textcoords=ax2,s='Attempts at learning\ndata science',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2017-10-01',x3.loc['2017-10-01','data science']),xytext=('2016-01-01',120),s='Started Masters in\nEnergy Technology',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
+axs.annotate(xy=('2019-02-01',x3.loc['2019-02-01','data science']),xytext=('2018-04-01',140),s='Battery 2030+\nInitiative announced',arrowprops=dict(arrowstyle='->'),horizontalalignment='center',verticalalignment='center',fontsize=25,**hfont)
