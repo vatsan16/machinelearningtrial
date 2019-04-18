@@ -1,2 +1,2 @@
-# machinelearningtrial
-Programs and notes while learning machine learning from the stanford opencourseware
+# My Machine Learning Codes
+Programs and notes about machine learning
